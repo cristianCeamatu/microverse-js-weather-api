@@ -41,6 +41,7 @@ const getWeather = async (location) => {
     errorEl.classList.remove('text-danger');
     errorEl.classList.add('text-info');
     errorEl.innerText = `You are searching for '${location}'`;
+
     return processWeatherResult(result.data);
   } catch (error) {
     const errorEl = document.querySelector('#search-error');
@@ -73,6 +74,9 @@ const updateDom = (weather, gif) => {
 
   if (gif !== undefined) {
     document.querySelector('#weather-image').src = gif;
+    const errorEl = document.querySelector('#gif-error');
+    errorEl.classList.remove('text-danger');
+    errorEl.innerText = 'Here is your Gif!';
   }
 
   document.querySelector('#tempType').innerText = 'F';
@@ -116,7 +120,7 @@ const tempToggler = () => {
     .addEventListener('click', (e) => {
       e.preventDefault();
       const newType = document.querySelector('#tempType').textContent;
-      newType === 'F' ? setFar() : setCel();
+      return newType === 'F' ? setFar() : setCel();
     });
 };
 
@@ -124,11 +128,11 @@ const formListener = () => {
   document.querySelector('#form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const weather = await getWeather(e.target.elements.location.value);
-
-    getGif(encodeURI(weather.description)).then((gif) =>
-      updateDom(weather, gif)
-    );
+    getWeather(e.target.elements.location.value).then((weather) => {
+      getGif(encodeURI(weather.description)).then((gif) =>
+        updateDom(weather, gif)
+      );
+    });
   });
 };
 

@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './assets/style.scss';
 
-import initListeners, { getGif, getWeather, updateDom } from './utils';
+import initListeners, { getWeather, updateDom } from './utils';
 
 function component() {
   const element = document.createElement('div');
@@ -24,7 +24,7 @@ function component() {
     <div class="row">
       <div class="col-md-6">
         <img src="https://media.giphy.com/media/dxywOfwJmdEd0EIdgB/giphy.gif" alt="Default Gif" id="weather-image">
-        <p class="text-center" id="gif-error">Here is your Gif (as promissed)</p>
+        <p class="text-center" id="gif-error"></p>
       </div>
       <div class="col-md-6">
         <table class="table table-dark">
@@ -70,9 +70,7 @@ function component() {
 
 document.body.appendChild(component());
 initListeners();
-getWeather('constanta').then((weather) =>
-  updateDom(
-    weather,
-    'https://media.giphy.com/media/dxywOfwJmdEd0EIdgB/giphy.gif'
-  )
-);
+getWeather('constanta').then((weather) => updateDom(
+  weather,
+  'https://media.giphy.com/media/dxywOfwJmdEd0EIdgB/giphy.gif',
+));

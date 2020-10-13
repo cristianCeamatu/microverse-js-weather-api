@@ -20,7 +20,9 @@ const processGifResult = (result) => result.data.data.images.original.url;
 
 const getGif = async (search) => {
   try {
-    const result = await axios.get(`${process.env.GLIPHY_BASE_URI}${search}`);
+    const result = await axios.get(
+      `https://api.giphy.com/v1/gifs/translate?api_key=xd2uDy89ReVVZSV6zc1IfvgMEVc7emRk&s=${search}`
+    );
     return processGifResult(result);
   } catch (error) {
     const errorEl = document.querySelector('#gif-error');
@@ -32,7 +34,7 @@ const getGif = async (search) => {
 const getWeather = async (location) => {
   try {
     const result = await axios.get(
-      `${process.env.WEATHER_BASE_URI}${location}`
+      `https://api.openweathermap.org/data/2.5/weather?appid=e980682af62e957c12c38875c38ba233&units=metric&q=${location}`
     );
 
     const errorEl = document.querySelector('#search-error');

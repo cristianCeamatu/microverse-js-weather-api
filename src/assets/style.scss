@@ -1,9 +1,10 @@
-$body-color: yellow;
+img {
+  max-height: 500px;
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
 
-body {
-  background-color: $body-color;
-
-  div {
-    background-color: red;
-  }
+button > * {
+  pointer-events: none;
 }

@@ -7,7 +7,7 @@ function component() {
   const element = document.createElement('div');
 
   element.innerHTML = 'Hello world1!';
-  element.classList.add('h3');
+  element.classList.add('h3', 'text-danger');
 
   return element;
 }

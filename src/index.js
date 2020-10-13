@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './assets/style.scss';
 
+import { getWeather, getGif } from './utils';
+
 function component() {
   const element = document.createElement('div');
 
@@ -13,3 +15,6 @@ function component() {
 }
 
 document.body.appendChild(component());
+
+getWeather('constanta');
+getGif('clouds');

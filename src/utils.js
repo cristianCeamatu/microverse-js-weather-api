@@ -21,20 +21,21 @@ const processGifResult = (result) => result.data.data.images.original.url;
 const getGif = async (search) => {
   try {
     const result = await axios.get(
-      `https://api.giphy.com/v1/gifs/translate?api_key=xd2uDy89ReVVZSV6zc1IfvgMEVc7emRk&s=${search}`
+      `https://api.giphy.com/v1/gifs/translate?api_key=xd2uDy89ReVVZSV6zc1IfvgMEVc7emRk&s=${search}`,
     );
-    return processGifResult(result);
+    return await processGifResult(result);
   } catch (error) {
     const errorEl = document.querySelector('#gif-error');
     errorEl.classList.add('text-danger');
     errorEl.innerText = `No Gif found for '${search}'`;
+    return undefined;
   }
 };
 
 const getWeather = async (location) => {
   try {
     const result = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?appid=e980682af62e957c12c38875c38ba233&units=metric&q=${location}`
+      `https://api.openweathermap.org/data/2.5/weather?appid=e980682af62e957c12c38875c38ba233&units=metric&q=${location}`,
     );
 
     const errorEl = document.querySelector('#search-error');
@@ -47,8 +48,9 @@ const getWeather = async (location) => {
     const errorEl = document.querySelector('#search-error');
     errorEl.classList.remove('text-info');
     errorEl.classList.add('text-danger');
-    errorEl.innerText =
-      'The city or country you have searched does not exist on the weather API.';
+    errorEl.innerText = 'The city or country you have searched does not exist on the weather API.';
+
+    return undefined;
   }
 };
 
@@ -84,32 +86,32 @@ const updateDom = (weather, gif) => {
 
 const setFar = () => {
   document.querySelector('#temp').innerText = (
-    (+document.querySelector('#temp').innerText * 9) / 5 +
-    32
+    (+document.querySelector('#temp').innerText * 9) / 5
+    + 32
   ).toFixed(3);
   document.querySelector('#tempMin').innerText = (
-    (+document.querySelector('#tempMin').innerText * 9) / 5 +
-    32
+    (+document.querySelector('#tempMin').innerText * 9) / 5
+    + 32
   ).toFixed(3);
   document.querySelector('#tempMax').innerText = (
-    (+document.querySelector('#tempMax').innerText * 9) / 5 +
-    32
+    (+document.querySelector('#tempMax').innerText * 9) / 5
+    + 32
   ).toFixed(3);
   document.querySelector('#tempType').innerText = 'C';
 };
 
 const setCel = () => {
   document.querySelector('#temp').innerText = (
-    ((+document.querySelector('#temp').innerText - 32) * 5) /
-    9
+    ((+document.querySelector('#temp').innerText - 32) * 5)
+    / 9
   ).toFixed(3);
   document.querySelector('#tempMin').innerText = (
-    ((+document.querySelector('#tempMin').innerText - 32) * 5) /
-    9
+    ((+document.querySelector('#tempMin').innerText - 32) * 5)
+    / 9
   ).toFixed(3);
   document.querySelector('#tempMax').innerText = (
-    ((+document.querySelector('#tempMax').innerText - 32) * 5) /
-    9
+    ((+document.querySelector('#tempMax').innerText - 32) * 5)
+    / 9
   ).toFixed(3);
   document.querySelector('#tempType').innerText = 'F';
 };
@@ -129,9 +131,7 @@ const formListener = () => {
     e.preventDefault();
 
     getWeather(e.target.elements.location.value).then((weather) => {
-      getGif(encodeURI(weather.description)).then((gif) =>
-        updateDom(weather, gif)
-      );
+      getGif(encodeURI(weather.description)).then((gif) => updateDom(weather, gif));
     });
   });
 };
